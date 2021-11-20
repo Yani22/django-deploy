@@ -1,0 +1,92 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Program{% endblock %}
+
+{% block content %}
+{% for res in res_out %}
+{% for out in res.author.all %}
+<!-- START -->
+<section class=" eve-deta-pg">
+    <div class="container">
+        <div class="eve-deta-pg-main">
+            <div class="lhs">
+                <div class="img">
+                    <img src="{{res.image.url}}" alt="">
+                </div>
+                <div class="head">
+                    <span class="dat"><b>{{res.date_created}}</b></span>
+                    <h1>{{res.title}}</h1>
+                </div>
+            </div>
+            <div class="rhs">
+                <div class="list-rhs-form pglist-bg pglist-p-com">
+                    <div class="quote-pop">
+                        <h3>Author</h3>
+                            <ul>
+                                <li>
+                                    <img src="{{out.profile_image.url}}" width="30%" alt="">
+                                </li>
+                                <li>
+                                    {{out.first_name}} {{out.middle_name}} {{out.last_name}}
+                                </li>
+                                <li>
+                                    {{out.email}}
+                                </li>
+                                <li>
+                                    {{out.contact_no}}
+                                </li>
+                                <li>
+                                    {{out.full_address}}<hr>
+                                </li>
+                            </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--END-->
+
+<!-- START -->
+<section class=" eve-deta-body">
+    <div class="container">
+        <div class="eve-deta-body-main">
+            <div class="lhs">
+                <p>Celebrate as the sights, sounds and aromas of Asia come alive during this local San Diego festival
+                    thatâ€™s fit for the whole family happening weekends January 11, 2020 - February 2, 2020 (to include
+                    Monday, January 20, 2020.)</p>
+                <p>You wonâ€™t want to miss SeaWorld San Diegoâ€™s one-of-a-kind Lunar New Year celebration, featuring
+                    an incredible Chinese acrobats show, local performers, and delicious culinary delights. Dig into the
+                    Asian-inspired offerings of Ramen, Lo Mein, Bao Buns, Dim Sum, rice dishes and more.</p>
+                <p>It is a long established fact that a reader will be distracted by the readable content of a page when
+                    looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+                    distribution of letters, as opposed to using 'Content here, content here', making it look like
+                    readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their
+                    default model text, and a search for 'lorem ipsum' will uncover many web sites still in their
+                    infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose
+                    (injected humour and the like).</p>
+            </div>
+            <div class="rhs">
+                <div class="sec-1">
+                    <h4>Research information:</h4>
+                    <ul>
+                        <li><b>Title</b>: {{res.title}}</li>
+                        <li><b>Date created</b>: {{res.date_created}}</li>
+                        <li><b>Program</b>: {{out.program.program_type}}</li>
+                        <li><b>Author</b>: {{out.first_name}} {{out.middle_name}} {{out.last_name}}<br>
+                            <b>Address</b>: {{out.full_address}}<br>
+                            <b>Phone</b>: {{out.contact_no}}<br>
+                            <b>Email</b>: {{out.email}}<br></li>
+                    </ul>
+                    <a href="/media/{{res.file}}">Download File</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--END-->
+{% endfor %}
+{% endfor %}
+
+{% endblock %}

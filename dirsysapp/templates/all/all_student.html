@@ -1,0 +1,151 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% load auth_extras %}
+{% block title %}Students{% endblock %}
+
+{% block content %}
+
+<!-- START -->
+<section>
+    <div class="container">
+        <div class="row">
+          <div class="ban-tit">
+            <h1>
+              <b>Students Research Output Summary<br></b>Find any summarized research ouputs by student.
+            </h1>
+          </div>
+          <div class="ban-search">
+            <form method="get" name="filter_form" id="filter_form" class="filter_form">
+              <ul>
+                <li class="sr-sea">
+                  <input type="text" autocomplete="off" name="q" id="id_q" placeholder="Search for titles and authors..."
+                    class="search-field">
+                </li>
+                <li class="sr-btn">
+                  <input type="submit" id="filter_submit" name="filter_submit" value="Search" class="filter_submit">
+                </li>
+              </ul>
+            </form>
+          </div>
+        </div>
+      </div>
+</section>
+<!--END-->
+
+<!-- START -->
+<section class=" blog-body" id="enduser">
+    <div class="container">
+        <div class="us-ppg-com us-ppg-blog">
+            <ul id="intseres" class="blog-wrapper">
+                {% for res in res_out %}
+                {% for out in res.author.all %}
+                {% if forloop.counter <= 12 %}
+                {% if out.user|has_group:"Student" %}
+                <li class="blog-item">
+                    <div class="pro-eve-box">
+                        <div>
+                            <img src="{{ res.image.url }}" alt="">
+                        </div>
+                        <div>
+                            <p>{{ res.date_created }}</p>
+                            <h2>{{ res.title }}</h2><hr>
+                            <h2>{{ out.first_name }} {{ out.middle_name }} {{ out.last_name }} | </h2>
+                        </div>
+                        <a href="{% url 'reports:reports_student' res.id %}" class="fclick">
+                            &nbsp;</a>
+                    </div>
+                </li>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+
+{% if student_user_post %}
+<section class=" blog-body">
+  <div class="container">
+      <div class="us-ppg-com us-ppg-blog">
+          <ul id="intseres" class="blog-wrapper">
+              {% for res in student_user_post %}
+              {% for out in res.author.all %}
+              {% if out.user|has_group:"Student" %}
+              <li class="blog-item">
+                  <div class="pro-eve-box">
+                      <div>
+                          <img src="{{ res.image.url }}" alt="">
+                      </div>
+                      <div>
+                          <p>{{ res.date_created }}</p>
+                          <h2>{{ res.title }}</h2><hr>
+                          <h2>{{ out.first_name }} {{ out.middle_name }} {{ out.last_name }} | </h2>
+                      </div>
+                      <a href="{% url 'reports:reports_student' res.id %}" class="fclick">
+                          &nbsp;</a>
+                  </div>
+              </li>
+              {% endif %}
+              {% endfor %}
+              {% endfor %}
+          </ul>
+      </div>
+
+    <span style="color: white;">a</span>
+    <div class="d-flex flex-column m-auto pagination mt-5">
+      <nav aria-label="Page navigation">
+        <ul class="pagination pg-grey justify-content-center">
+          {% if student_user_post.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?{% if query %}q={{query}}&{% endif %}page={{ 
+              student_user_post.previous_page_number }}">&laquo; Previous</a>
+          </li>
+          {% endif %}
+
+          {% for i in student_user_post.paginator.page_range %}
+          {% if student_user_post.number == i %}
+          <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+          {% else %}
+          <li class="page-item"><a class="page-link" href="?{% if query %}q={{query}}&{% endif %}page={{i}}">{{ i }}</a>
+          </li>
+          {% endif %}
+          {% endfor %}
+
+          {% if student_user_post.has_next %}
+          <li class="page-item">
+            <a class="page-link"
+              href="?{% if query %}q={{query}}&{% endif %}page={{student_user_post.next_page_number}}">Next</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link"
+              href="?{% if query %}q={{query}}&{% endif %}page={{student_user_post.paginator.num_pages}}">Last &raquo;</a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</section>
+
+{% else %}
+<section class=" blog-body">
+  <div class="container">
+      <div class="us-ppg-com us-ppg-blog">
+        <div><br>
+          <h2> No results for "{{query}}".</h2>
+        </div>
+      </div>
+  </div>
+</section>
+{% endif %}
+<!--END-->
+<script>
+  document.getElementById("id_q").value = "{{query}}"
+  if (document.getElementById("id_q").value == "{{query}}"){
+    document.getElementById("enduser").style.display = "none";
+  }else{
+    document.getElementById("enduser").style.display = "block";
+  }
+</script>
+{% endblock %}

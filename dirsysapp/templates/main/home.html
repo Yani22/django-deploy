@@ -1,0 +1,385 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Research Output Archive and Directory{% endblock %}
+
+{% block content %}
+<!-- START -->
+<div class="container">
+  <div class="row">
+    <div class="ban-tit">
+      <h1>
+        <b>St. Mary's College<br>of Tagum, Inc.</b>Online Research Output Archive and Directory
+      </h1>
+    </div>
+    <div class="ban-ql">
+      <ul>
+        <li>
+          <div>
+            <img src="{% static 'images/icon/1.png' %}" alt="">
+            <h4>Researcher</h4>
+            <p>Annual summary of researchers.</p>
+            <a href="#">Explore Now</a>
+          </div>
+        </li>
+        <li>
+          <div>
+            <img src="{% static 'images/icon/2.png' %}" alt="">
+            <h4>Faculty, Student and Program</h4>
+            <p>Research outputs summary by faculty, student and program.</p>
+            <a href="#">Explore Now</a>
+          </div>
+        </li>
+        <li>
+          <div>
+            <img src="{% static 'images/icon/3.png' %}" alt="">
+            <h4>Research Outputs</h4>
+            <p>List of all research outputs.</p>
+            <a href="#">Explore Now</a>
+          </div>
+        </li>
+        <li>
+          <div>
+            <img src="{% static 'images/icon/4.png' %}" alt="">
+            <h4>Authors and Titles</h4>
+            <p>List of all authors and titles.</p>
+            <a href="#">Explore Now</a>
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+    <div class="h2-ban-ql">
+      <ul>
+        <li>
+          <div>
+            <img src="{% static 'images/icon/listing.png' %}" alt="">
+            <h5><span class="count1">14</span>All Services</h5>
+            <a href="all-category.html">&nbsp;</a>
+          </div>
+        </li>
+        <li>
+          <div>
+            <img src="{% static 'images/icon/shop.png' %}" alt="">
+            <h5><span class="count1">24</span>Products</h5>
+            <a href="all-products.html">&nbsp;</a>
+          </div>
+        </li>
+        <li>
+          <div>
+            <img src="{% static 'images/icon/event.png' %}" alt="">
+            <h5><span class="count1">24</span>Events</h5>
+            <a href="events.html">&nbsp;</a>
+          </div>
+        </li>
+        <li>
+          <div>
+            <img src="{% static 'images/icon/coupons.png' %}" alt="">
+            <h5><span class="count1">08</span>Coupons</h5>
+            <a href="coupons.html">&nbsp;</a>
+          </div>
+        </li>
+        <li>
+          <div>
+            <img src="{% static 'images/icon/blog.png' %}" alt="">
+            <h5><span class="count1">40</span>Blogs</h5>
+            <a href="blog-posts.html">&nbsp;</a>
+          </div>
+        </li>
+        <li>
+          <div>
+            <img src="{% static 'images/icon/general.png' %}" alt="">
+            <h5><span class="count1">262</span>Community</h5>
+            <a href="community.html">&nbsp;</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END -->
+<style>
+  .hom-top {
+    transition: all 0.5s ease;
+    background: none;
+    box-shadow: none;
+  }
+
+  .top-ser {
+    display: none;
+  }
+
+  .dmact .top-ser {
+    display: block;
+  }
+
+  .caro-home {
+    margin-top: 90px;
+    float: left;
+    width: 100%;
+  }
+
+  .carousel-item:before {
+    background: none;
+  }
+</style>
+
+<!-- START -->
+<section>
+  <div class="hom-mpop-ser">
+    <div class="land-pack">
+      <div class="container">
+        <div class="hom-mpop-main">
+          <div class="home-tit">
+            <h2>
+              <span>Researcher</span>
+            </h2>
+            <p>Annual summary of researchers.</p>
+          </div>
+          {% for end in end_user %}
+          {% if forloop.counter <= 6 %} <div class="col-md-6">
+            <div>
+              <!--POPULAR LISTINGS-->
+              <div class="hom-mpop">
+                <!--POPULAR LISTINGS IMAGE-->
+                <div class="col-md-3"><img src="{{ end.profile_image.url }}" alt="" />
+                </div>
+                <!--POPULAR LISTINGS: CONTENT-->
+                <div class="col-md-9">
+                  <h3>{{end.first_name}} {{end.middle_name}} {{end.last_name}}</h3>
+                  <h4>{{end.program}}</h4>
+                  <h4>{{end.}}</h4>
+                  <span class="rat-sh">3.6{{reviews}}</span>
+                </div>
+                <a href="{% url 'reports:reports_researcher' end.id %}">
+                  &nbsp;</a>
+              </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+      <a href="{% url 'reports:all_researcher' %}" class="more">View all Researchers</a>
+    </div>
+  </div>
+  </div>
+</section>
+<!-- END -->
+
+<!-- START -->
+<section>
+  <div class="container">
+    <div class="hom-mpop-main">
+      <div class="home-tit">
+        <h2>
+          <span>Faculty, Student and Program</span>
+        </h2>
+        <p>Research outputs summary by faculty, student and program.</p>
+      </div>
+
+      <div class="ho-popu-bod">
+        <!--Top Branding Hotels-->
+        <div class="col-md-4">
+          <div class="hot-page2-hom-pre-head">
+            <h4><span>Faculty</span></h4>
+          </div>
+          <div class="hot-page2-hom-pre">
+            <ul>
+              <!--LISTINGS-->
+              {% load auth_extras %}
+              {% for res in res_out %}
+              {% if forloop.counter <= 5 %}
+              {% for out in res.author.all %} 
+              {% if out.user|has_group:"Faculty" %} <li>
+                <div class="hot-page2-hom-pre-1"><img src="{{ res.image.url }}" alt="">
+                </div>
+                <div class="hot-page2-hom-pre-2">
+                  <h5>{{res.title}}</h5>
+                  <span>{{out.first_name}} {{out.last_name}}<br>{{res.date_created}}</span>
+                </div>
+                <a href="{% url 'reports:reports_faculty' res.id %}" class="fclick"></a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+                <!--LISTINGS-->
+            </ul>
+          </div>
+          <a href="{% url 'reports:all_faculty' %}" class="more">View all faculty research outputs</a>
+        </div>
+        <div class="col-md-4">
+          <div class="hot-page2-hom-pre-head">
+            <h4><span>Student</span></h4>
+          </div>
+          <div class="hot-page2-hom-pre">
+            <ul>
+              <!--LISTINGS-->
+              {% for res in res_out %}
+              {% if forloop.counter <= 5 %} {% for out in res.author.all %} {% if out.user|has_group:"Student" %} <li>
+                <div class="hot-page2-hom-pre-1"><img src="{{ res.image.url }}" alt="">
+                </div>
+                <div class="hot-page2-hom-pre-2">
+                  <h5>{{res.title}}</h5>
+                  <span>{{out.first_name}} {{out.last_name}}<br>{{res.date_created}}</span>
+
+
+                </div>
+                <a href="{% url 'reports:reports_student' res.id %}" class="fclick"></a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+                <!--LISTINGS-->
+            </ul>
+          </div>
+          <a href="{% url 'reports:all_student' %}" class="more">View all Student research outputs</a>
+        </div>
+        <div class="col-md-4">
+          <div class="hot-page2-hom-pre-head">
+            <h4><span>Program</span></h4>
+          </div>
+          <div class="hot-page2-hom-pre">
+            <ul>
+              <!--LISTINGS-->
+              {% for res in res_out %}
+              {% if forloop.counter <= 5 %} {% for out in res.author.all %} {% if out.program %} <li>
+                <div class="hot-page2-hom-pre-1"><img src="{{ res.image.url }}" alt="">
+                </div>
+                <div class="hot-page2-hom-pre-2">
+                  <h5>{{res.title}}</h5>
+                  <span>{{out.program}}<br>{{res.date_created}}</span>
+                </div>
+                <a href="{% url 'reports:reports_program' res.id %}" class="fclick"></a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+                <!--LISTINGS-->
+            </ul>
+          </div>
+          <a href="{% url 'reports:all_program' %}" class="more">View all Program research outputs</a>
+        </div>
+        <!--End Top Branding Hotels-->
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+<!-- END -->
+
+<!-- START -->
+<section>
+  <div class="str">
+    <div class="container">
+      <div class="row">
+        <div class="home-tit">
+          <h2><span>Research Outputs</span></h2>
+          <p>List of all research outputs.</p>
+        </div>
+        <div class="land-pack">
+          <ul>
+            {% for res in res_out %}
+            {% if forloop.counter <= 4 %} {% for out in res.author.all %} <li>
+              <div class="land-pack-grid">
+                <div class="land-pack-grid-img">
+                  <img src="{{ res.image.url }}" alt="">
+                </div>
+                <div class="land-pack-grid-text">
+                  <h4>{{ res.title }} <span class="dir-ho-cat">{{ out.program }} ({{ res.date_created }})</span>
+                  </h4>
+                </div>
+                <a href="{% url 'reports:reports_research_output' res.id %}" class="land-pack-grid-btn">View all
+                  listings</a>
+              </div>
+              </li>
+              {% endfor %}
+              {% endif %}
+              {% endfor %}
+          </ul>
+          <a href="{% url 'reports:all_research_output' %}" class="more">View all research outputs</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- END -->
+
+<!-- START -->
+<section>
+  <div class="str count">
+    <div class="container">
+      <div class="row">
+        <div class="home-tit">
+          <h2><span>Authors and Titles</span></h2>
+          <p>List of all authors and titles.</p>
+        </div>
+        <div class="hom-event">
+          <div class="hom-eve-com hom-eve-lhs">
+            {% for res in res_out %}
+            {% if forloop.counter <= 2 %} {% for out in res.author.all %} <!-- START -->
+              <div class="hom-eve-lhs-1 col-md-4">
+                <div class="eve-box">
+                  <div>
+                    <a href="{% url 'reports:reports_authors_titles' res.id %}">
+                      <img src="{{ res.image.url }}" alt="">
+                      <span>{{ res.date_created }}</span>
+                    </a>
+                  </div>
+                  <div>
+                    <h4>
+                      <a href="{% url 'reports:reports_authors_titles' res.id %}">{{ res.title }}</a>
+                    </h4>
+                    Author:
+                    <strong><span>{{ out.first_name }} {{ out.middle_name }} {{ out.last_name }}<br></span></strong>
+                  </div>
+                  <div>
+                    <div class="auth">
+                      <img src="{% url 'reports:reports_authors_titles' res.id %}" alt="">
+                      <b>Program:</b><br>
+                      <h4> {{ out.program }}</h4>
+                      <a target="_blank" href="{% url 'reports:reports_authors_titles' res.id %}" class="fclick"></a>
+                    </div>                    
+                  </div>
+                  <a href="{% url 'reports:all_authors_titles' %}" class="more">View all authors and titles</a>
+                </div>
+              </div>
+              <!-- END -->
+              {% endfor %}
+              {% endif %}
+              {% endfor %}
+
+
+              {% for res in res_out %}
+              {% if forloop.counter <= 5 %}
+              {% for out in res.author.all %}
+              <!-- START -->
+                <div class="hom-eve-lhs-2 col-md-4">
+                  <ul>
+                    <li>
+                      <div class="eve-box-list">
+                        <img src="{{ res.image.url }}" alt="">
+                        <h4 title="Lunar New Year 2020">{{ res.title }} ({{ res.date_created }})</h4>
+                        <p>
+                        <p>{{ out.first_name }} {{ out.last_name }}|</p>
+                        <a href="{% url 'reports:reports_authors_titles' res.id %}" class="fclick"></a>
+                        
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <!-- END -->
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- END -->
+{% endblock %}

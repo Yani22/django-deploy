@@ -1,0 +1,125 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Annual Summary of Researchers{% endblock %}
+
+{% block content %}
+
+<!-- START -->
+<section>
+    <div class="list-bann">
+        <img src="{% static 'images/smct-library2.jpg' %}">
+    </div>
+</section>
+<!-- END -->
+
+<!-- START -->
+{% for end in end_user %}
+<!--LISTING DETAILS-->
+<section class=" pg-list-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pg-list-1-pro">
+                    <img src="{{ end.profile_image.url }}">
+                    <span class="stat"><i class="material-icons">verified_user</i></span>
+                </div>
+                <div class="pg-list-1-left">
+                    <h3>{{end.first_name}} {{end.middle_name}} {{end.last_name}}</h3>
+                    <div class="list-rat-all">
+                        <b>3.7</b>
+                        <label class="rat">
+                            <i class="material-icons">star</i>
+                            <i class="material-icons">star</i>
+                            <i class="material-icons">star</i>
+                            <i class="material-icons">star</i>
+                            <i class="material-icons ratstar">star</i>
+                        </label>
+                        <span>3Reviews</span>
+                    </div>
+
+                    <p><b>Address:</b> {{ end.full_address }}</p>
+                    <div class="list-number pag-p1-phone">
+                        <ul>
+                            <a href="tel:5522114422">
+                                <li class="ic-php">{{ end.contact_no }} </li>
+                            </a>
+                            <a href="mailto:rn53themes@gmail.com">
+                                <li class="ic-mai">{{ end.email }}</li>
+                            </a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--END-->
+
+<!--START-->
+<section class=" list-pg-bg">
+    <div class="container">
+        <div class="row">
+            <div class="com-padd">
+                <!--LISTING DETAILS: LEFT PART 1-->
+                <div class="pglist-bg pglist-p-com">
+                    <div class="pglist-p-com-ti">
+                        <h3>
+                            <span>About</span> {{ end.first_name }} {{ end.middle_name }} {{ end.last_name }}
+                        </h3>
+                    </div>
+                    <div class="list-pg-inn-sp list-pg-inn-abo">
+                        <p>The Travel – Tour Travels Template is one of the best hotel booking and travel & tour
+                            booking templates in the world, it’s suitable for travel companies and agencies that
+                            provide services of a hotel, car rental, flight, cruise and tour, rent a car, holidays,
+                            transport, cruises, Leisure, flight tickets, holiday website, transfers website,
+                            vacations websites, last minute deal, early deals offers, local directory, listing
+                            packages, marketplace home houses apartment, B&B, hostel, hotel, inn, lodge, resort, spa
+                            property for sale, suite lodge motel room, reservations, accommodations, holidays and
+                            reviews.It comes with 24 Valid HTML5 & CSS3 Pages based on Bootstrap grid system.
+                        </p>
+                    </div>
+                </div>
+                <!--END LISTING DETAILS: LEFT PART 2-->
+
+                <!--LISTING DETAILS: LEFT PART 5-->
+                <div class="pglist-p3 pglist-bg pglist-p-com" id="ld-rev">
+                    <div class="pglist-p-com-ti">
+                        <h3><span>{{ end.first_name }}'s</span> Annual Summary</h3>
+                    </div>
+                    <div class="list-pg-inn-sp">
+                        <div class="lp-ur-all">
+                            <div class="lp-ur-all-right">
+                                {% for res in res_out %}
+                                {% for all in res.author.all %}
+                                {% if all.first_name == end.first_name %}
+                                <ul>
+                                    <li>
+                                        <div class="lr-user-wr-img"><img src="{{res.image.url}}"
+                                                alt="">
+                                        </div>
+                                        <div class="lr-user-wr-con">
+                                            <h6>{{res.title}}</h6>
+                                            <span class="lr-revi-date">{{res.date_created}}</span>
+                                            <p>{{all.program.program_type}}</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                {% endif %}
+                                {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--END LISTING DETAILS: LEFT PART 5-->
+
+            </div>
+        </div>
+    </div>
+</section>
+<!--END-->
+{% endfor %}
+
+{% endblock %}
