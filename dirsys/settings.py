@@ -63,7 +63,9 @@ ROOT_URLCONF = 'dirsys.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR.joinpath('dirsysapp.templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,6 +134,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
     '/static/',
 ]
+
+STATIC_ROOT = '/var/www/Yani22/static'
 
 MEDIA_URL = '/media/'
 
