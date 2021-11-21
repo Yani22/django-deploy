@@ -21,7 +21,7 @@ class Program(models.Model):
         ('Research Office Program', 'Research Office Program'),
     )
     program_type = models.CharField(max_length=31,  choices=PROGRAM_TYPE)
-    program_logo = models.ImageField(upload_to='images/', null=True)
+    program_logo = models.ImageField(null=True)
 
     def __str__(self):
         return self.program_type
@@ -35,7 +35,7 @@ class EndUser(models.Model):
     email = EmailField(null=True)
     contact_no = CharField(max_length=11, null=True)
     full_address = models.CharField(max_length=200, null=True)
-    profile_image = models.ImageField(upload_to='images/', null=True)
+    profile_image = models.ImageField(null=True)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -45,7 +45,7 @@ class ResearchOutput(models.Model):
     title = models.CharField(max_length=100)
     author = models.ManyToManyField(EndUser)
     file = models.FileField(upload_to='documents/', null=True)
-    image = models.ImageField(upload_to='images/', null=True)
+    image = models.ImageField(null=True)
     date_created = models.DateField(("Date"), default=date.today)
 
     def __str__(self):
